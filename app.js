@@ -5,14 +5,13 @@ const blogRoutes = require('./routes/blogRoutes')
 
 const app = express()
 app.set('view engine', 'ejs')
-const dbURI = 'mongodb+srv://${{ secrets.MONGO_USER }}:${{ secrets.MONGO_PASS }}@devcluster-1vl5x.mongodb.net/test-blog?retryWrites=true&w=majority'
+const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@devcluster-1vl5x.mongodb.net/test-blog?retryWrites=true&w=majority`
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
         .then(result => { 
             console.log('Mongo connected.')
             app.listen(3000)
+            console.log('Express is UP and running...')
         }).catch(error => console.log(error))
-
-console.log('Express is UP and running...')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
